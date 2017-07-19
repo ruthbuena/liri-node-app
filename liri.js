@@ -1,4 +1,4 @@
-vaf fs = require("fs");
+var fs = require("fs");
 
 var one = process.argv[2];
 var two = process.argv[3];
@@ -36,12 +36,12 @@ var Spotify = require('node-spotify-api');
 
 
 function spotifyThis(){
-    var default = "The Sign";
-    if (two !== undefined) {
-      default = two;
-    }
+    // var default = "The Sign";
+    // if (two !== undefined) {
+    //   default = two;
+    // }
 
-    spotify.search({type: 'track', query: queryInput}, function(err.data){
+    spotify.search({type: 'track', query: queryInput}, function(err,data){
       if (err) {
         return console.log('Error occured: ' + err);
       }
@@ -49,7 +49,7 @@ function spotifyThis(){
       console.log("Artist(s): " + data.tracks.items[0].artists[0].name);
       console.log("The Song's Name: " + data.tracks.items[0].name);
       console.log("A Preview Link of the Song: " + data.tracks.items[0].external_urls.spotify);
-      console.log("Album: " + data.tracks.items[0]album.name);
+      console.log("Album: " + data.tracks.items[0].album.name);
     fs.appendFile('log.txt', "Artist: " + data.tracks.items[0].artists[0].name + "\n" + "Song Name: " + data.tracks.items[0].name + "\n" + "Preview Link: " + data.tracks.items[0].external_urls.spotify + "\n" + "Album: " +
     data.tracks.items[0].album.name + "\n" + "====================================================");
   });
@@ -60,7 +60,7 @@ function spotifyThis(){
 function movieThis(){
    var movieName = "Mr. Nobody";
    if (two !== undefined) {
-     default = two;
+    //  default = two;
    }
       request('http://www.omdbapi.com/?t=' + movieName + "&tomatoes=true", function (error, response, body) {
           if (!error && response.statusCode == 200) {
@@ -101,12 +101,12 @@ function doThis(){
             break;
         case "spotify-this-song":
           function spotifyThis(){
-              var default = "The Sign";
-              if (two !== undefined) {
-                default = two;
-              }
+              // var default = "The Sign";
+              // if (two !== undefined) {
+              //   default = two;
+              // }
 
-              spotify.search({type: 'track', query: queryInput}, function(err.data){
+              spotify.search({type: 'track', query: queryInput}, function(err,data){
                 if (err) {
                   return console.log('Error occured: ' + err);
                 }
@@ -114,7 +114,7 @@ function doThis(){
                 console.log("Artist(s): " + data.tracks.items[0].artists[0].name);
                 console.log("The Song's Name: " + data.tracks.items[0].name);
                 console.log("A Preview Link of the Song: " + data.tracks.items[0].external_urls.spotify);
-                console.log("Album: " + data.tracks.items[0]album.name);
+                console.log("Album: " + data.tracks.items[0].album.name);
                 fs.appendFile('log.txt', "Artist: " + data.tracks.items[0].artists[0].name + "\n" + "Song Name: " + data.tracks.items[0].name + "\n" + "Preview Link: " + data.tracks.items[0].external_urls.spotify + "\n" + "Album: " +
                 data.tracks.items[0].album.name + "\n" + "====================================================");
               });
@@ -125,7 +125,7 @@ function doThis(){
             function movieThis(){
                var movieName = "Mr. Nobody";
                if (two !== undefined) {
-                 default = two;
+                //  default = two;
                }
                   request('http://www.omdbapi.com/?t=' + movieName + "&tomatoes=true", function (error, response, body) {
                       if (!error && response.statusCode == 200) {
