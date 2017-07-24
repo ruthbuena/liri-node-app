@@ -32,16 +32,20 @@ function myTweets(){
 }
 
 // Part Two: Node Spotify This Song
-var Spotify = require('node-spotify-api');
+var spotify = require('node-spotify-api');
 
 
 function spotifyThis(){
-    // var default = "The Sign";
-    // if (two !== undefined) {
-    //   default = two;
-    // }
+    if (two !== undefined) {
+      two = 'The Sign Ace of Base';
+    }
+// var client = new spotify({
+//     id: 5279c91d9a4f456ba81ff30a6b81d17,
+//     secret: a95b22e42f6a428c90fec7394039bada
+//   });
 
-    spotify.search({type: 'track', query: queryInput}, function(err,data){
+
+    spotify.search({type: 'track', query: two}, function(err,data){
       if (err) {
         return console.log('Error occured: ' + err);
       }
