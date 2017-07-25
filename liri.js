@@ -24,7 +24,7 @@ function myTweets(){
           console.log(tweets[i].text + "Created on: " + tweets[i].created_at);
           fs.appendFile('log.txt', tweets[i].text + "Created on: " + tweets[i].created_at + "\n");
         }
-          fs.appendFile('log.txt', "============================================================");
+          fs.appendFile('log.txt', "============================================================\n");
     } else {
           console.log(error);
     }
@@ -34,28 +34,30 @@ function myTweets(){
 // Part Two: Node Spotify This Song
 var spotify = require('spotify');
 
-var spotifyThis = function(songName) {
+
+function spotifyThis (){
+var queryInput= "The Sign Ace of Base";
+if (two !==undefined){
+  queryInput=two;
+}
 
   spotify.search({
     type: 'track',
-    query: songName
+    query: queryInput
   }, function(err, data) {
     if (err) {
       return console.log('Error occured: ' + err);
     }
 
-    var spotifySong = data.tracks.items;
-    for (var i = 0; i < spotifySong.length; i++) {
-      console.log(i);
-      console.log("Artist(s): " + spotifySong[i].artists.map(getArtistNames));
-      console.log("The Song's Name: " + spotifySong[i].name);
-      console.log("A Preview Link of the Song: " + spotifySong[i].preview_url);
-      console.log("Album: " + spotifySong[i].album.name);
-      fs.appendFile('log.txt', "Artist: " + spotifySong[i].artists.map(getArtistNames + "\nSong Name: " + spotifySong[i].name + "\nPreview Link: " + spotifySong[i].preview_url + "\nAlbum: " +
-        spotifySong[i].album.name + "\n===================================================="));
-    }
-  });
+    console.log("Artist(s): " + data.tracks.items[0].artists[0].name);
+    console.log("The Song's Name: " + data.tracks.items[0].name);
+    console.log("A Preview Link of the Song: " + data.tracks.items[0].external_urls.spotify);
+    console.log("Album: " + data.tracks.items[0].album.name);
+  fs.appendFile('log.txt', "Artist: " + data.tracks.items[0].artists[0].name + "\n" + "Song Name: " + data.tracks.items[0].name + "\n" + "Preview Link: " + data.tracks.items[0].external_urls.spotify + "\n" + "Album: " +
+  data.tracks.items[0].album.name + "\n" + "====================================================");
+});
 }
+
 
 // Part Three: Get Movie from OMBD Api
 
@@ -83,22 +85,74 @@ var movieThis = function (movieName){
 }
 
 // Part Four: Do What It Says LIRI
-//
-var doThis = function(){
-  fs.readFile("random.txt", "utf8", function(err,data){
-    if(err) throw err;
 
-      var dataArray = data.split(",");
-
-    if (dataArray.length==2){
-      pick(dataArray[0],dataArray[1]);
-    } else if (dataArray.length==1){
-      pick(dataArray[0]);
+function doThis(){
+  fs.readFile("random.txt", "utf8", function(error,data)
+  {
+    if(error){
+      console.log(error);
     }
-  });
-}
+    else {
+      var dataArray = data.split(",");
+      var one = dataArray[0];
+      var two = dataArray[1];
+      switch(one) {
+        case "my-tweets":
+            myTweets();
+            break;
+        case "spotify-this-song":
 
-var pick = function (one, two){
+        function spotifyThis (){
+        var queryInput= "The Sign Ace of Base";
+        }
+
+
+              spotify.search({type: 'track', query: queryInput}, function(err,data){
+                if (err) {
+                  return console.log('Error occured: ' + err);
+                }
+
+                console.log("Artist(s): " + data.tracks.items[0].artists[0].name);
+                console.log("The Song's Name: " + data.tracks.items[0].name);
+                console.log("A Preview Link of the Song: " + data.tracks.items[0].external_urls.spotify);
+                console.log("Album: " + data.tracks.items[0].album.name);
+                fs.appendFile('log.txt', "Artist: " + data.tracks.items[0].artists[0].name + "\n" + "Song Name: " + data.tracks.items[0].name + "\n" + "Preview Link: " + data.tracks.items[0].external_urls.spotify + "\n" + "Album: " +
+                data.tracks.items[0].album.name + "\n" + "====================================================");
+              });
+            }
+            spotifyThis();
+            function movieThis(){
+               var movieName = "Mr. Nobody";
+               if (two !== undefined) {
+
+               }
+                  request('http://www.omdbapi.com/?t=' + movieName + "&tomatoes=true", function (error, response, body) {
+                      if (!error && response.statusCode == 200) {
+                        var movieData = JSON.parse(body);
+                          console.log("Title: " + movieData.Title);
+                          console.log("Release Year: " + movieData.Year);
+                          console.log("IMDB Rating: " + movieData.imdbRating);
+                          console.log("Rotten Tomatoes Rating: " + movieData.tomatoUserRating);
+                          console.log("Country: " + movieData.Country);
+                          console.log("Language: " + movieData.Language);
+                          console.log("Plot: " + movieData.Plot);
+                          console.log("Actors: " + movieData.Actors);
+                        fs.appendFile('log.txt',"Title: " + movieData.Title + "\n" + "Release Year: " + movieData.Year + "\n" + "IMDB Rating: " + movieData.imdbRating + "\n" +
+                       "Rotten Tomatoes Rating: " + movieData.tomatoUserRating + "\n" + "Country: " + movieData.Country + "\n" + "Language: " + movieData.Language + "\n" +
+                       "Plot: " + movieData.Plot + "\n" + "Actors: " + movieData.Actors + "\n" + "======================================================");
+                      }
+                      else {
+                          console.log(error);
+                      }
+            });
+            }
+            movieThis();
+      }
+    });
+  }
+
+
+
 switch(one) {
   case "my-tweets":
       myTweets();
@@ -115,8 +169,3 @@ switch(one) {
   default:
   console.log('LIRI does not understand');
   }
-}
-
-var pickFunction = function(one,two){
-  pick(one,two);
-}
