@@ -92,19 +92,11 @@ function doThis() {
       var dataArray = data.split(",");
       var one = dataArray[0];
       var two = dataArray[1];
-      switch (one) {
-        case "my-tweets":
-          myTweets();
-          break;
-        case "spotify-this-song":
-          spotifyThis();
-          break;
-          movieThis();
-
-      }
     }
   });
 }
+
+
 
 
 switch (one) {
