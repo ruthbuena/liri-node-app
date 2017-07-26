@@ -42,14 +42,14 @@ var spotify = new Spotify({
 });
 
 function spotifyThis() {
-  var queryInput = "The Sign Ace of Base";
-  if (two !== undefined) {
-    queryInput = two;
-  }
+  // var queryInput = "The Sign Ace of Base";
+  // if (two !== undefined) {
+  //   queryInput = two;
+  // }
 
   spotify.search({
     type: 'track',
-    query: queryInput
+    query: two
   }, function(err, data) {
     if (err) {
       return console.log('Error occured: ' + err);
@@ -60,37 +60,30 @@ function spotifyThis() {
     console.log("A Preview Link of the Song: " + data.tracks.items[0].external_urls.spotify);
     console.log("Album: " + data.tracks.items[0].album.name);
     fs.appendFile('log.txt', "Artist: " + data.tracks.items[0].artists[0].name + "\n" + "Song Name: " + data.tracks.items[0].name + "\n" + "Preview Link: " + data.tracks.items[0].external_urls.spotify + "\n" + "Album: " +
-      data.tracks.items[0].album.name + "\n" + "====================================================");
+      data.tracks.items[0].album.name + "\n" + "====================================================\n");
   });
 }
 
 
 // Part Three: Get Movie from OMBD Api
-
-var movieThis = function(movieName) {
-
-  request('http://www.omdbapi.com/?t=' + movieName + "&tomatoes=true", function(error, response, body) {
+function movieThis() {
+  request('http://www.omdbapi.com/?t=' + two + "&plot=short&apikey=40e9cece", function(error, response, body) {
     if (!error && response.statusCode == 200) {
-      var movieData = JSON.parse(body);
-      console.log("Title: " + movieData.Title);
-      console.log("Release Year: " + movieData.Year);
-      console.log("IMDB Rating: " + movieData.imdbRating);
-      console.log("Rotten Tomatoes Rating: " + movieData.tomatoUserRating);
-      console.log("Country: " + movieData.Country);
-      console.log("Language: " + movieData.Language);
-      console.log("Plot: " + movieData.Plot);
-      console.log("Actors: " + movieData.Actors);
-      fs.appendFile('log.txt', "Title: " + movieData.Title + "\n" + "Release Year: " + movieData.Year + "\n" + "IMDB Rating: " + movieData.imdbRating + "\n" +
-        "Rotten Tomatoes Rating: " + movieData.tomatoUserRating + "\n" + "Country: " + movieData.Country + "\n" + "Language: " + movieData.Language + "\n" +
-        "Plot: " + movieData.Plot + "\n" + "Actors: " + movieData.Actors + "\n" + "======================================================");
+      console.log("Title: " + JSON.parse(body).Title);
+      console.log("Released: " + JSON.parse(body).Released);
+      console.log("Imdb Rating: " + JSON.parse(body).imdbRating);
+      console.log("Rotten Tomatoes Rating: " + JSON.parse(body).tomatoUserRating);
+      console.log("Language: " + JSON.parse(body).Language);
+      console.log("Plot: " + JSON.parse(body).Plot);
+      console.log("Actors: " + JSON.parse(body).Actors);
+      fs.appendFile('log.txt', "\nTitle: " + JSON.parse(body).Title + "\nRelease Year: " + JSON.parse(body).Year + "\nIMDB Rating: " + JSON.parse(body).imdbRating + "\nRotten Tomatoes Rating: " + JSON.parse(body).tomatoUserRating + "\nCountry: " + JSON.parse(body).Country +
+        "\nLanguage: " + JSON.parse(body).Language + "\nPlot: " + JSON.parse(body).Plot + "\nActors: " + JSON.parse(body).Actors + "\n======================================================");
     } else {
       console.log(error);
     }
   });
 }
-
 // Part Four: Do What It Says LIRI
-
 function doThis() {
   fs.readFile("random.txt", "utf8", function(error, data) {
     if (error) {
@@ -106,58 +99,11 @@ function doThis() {
         case "spotify-this-song":
           spotifyThis();
           break;
-      //     function spotifyThis() {
-      //       var queryInput = "The Sign Ace of Base";
-      //     }
-      //
-      //
-      //     spotify.search({
-      //       type: 'track',
-      //       query: queryInput
-      //     }, function(err, data) {
-      //       if (err) {
-      //         return console.log('Error occured: ' + err);
-      //       }
-      //
-      //       console.log("Artist(s): " + data.tracks.items[0].artists[0].name);
-      //       console.log("The Song's Name: " + data.tracks.items[0].name);
-      //       console.log("A Preview Link of the Song: " + data.tracks.items[0].external_urls.spotify);
-      //       console.log("Album: " + data.tracks.items[0].album.name);
-      //       fs.appendFile('log.txt', "Artist: " + data.tracks.items[0].artists[0].name + "\n" + "Song Name: " + data.tracks.items[0].name + "\n" + "Preview Link: " + data.tracks.items[0].external_urls.spotify + "\n" + "Album: " +
-      //         data.tracks.items[0].album.name + "\n" + "====================================================");
-      //     });
-      // }
-      // spotifyThis();
+          movieThis();
 
-      // function movieThis() {
-      //   var movieName = "Mr. Nobody";
-      //   if (two !== undefined) {
-      //
-      //   }
-      //   request('http://www.omdbapi.com/?t=' + movieName + "&tomatoes=true", function(error, response, body) {
-      //     if (!error && response.statusCode == 200) {
-      //       var movieData = JSON.parse(body);
-      //       console.log("Title: " + movieData.Title);
-      //       console.log("Release Year: " + movieData.Year);
-      //       console.log("IMDB Rating: " + movieData.imdbRating);
-      //       console.log("Rotten Tomatoes Rating: " + movieData.tomatoUserRating);
-      //       console.log("Country: " + movieData.Country);
-      //       console.log("Language: " + movieData.Language);
-      //       console.log("Plot: " + movieData.Plot);
-      //       console.log("Actors: " + movieData.Actors);
-      //       fs.appendFile('log.txt', "Title: " + movieData.Title + "\n" + "Release Year: " + movieData.Year + "\n" + "IMDB Rating: " + movieData.imdbRating + "\n" +
-      //         "Rotten Tomatoes Rating: " + movieData.tomatoUserRating + "\n" + "Country: " + movieData.Country + "\n" + "Language: " + movieData.Language + "\n" +
-      //         "Plot: " + movieData.Plot + "\n" + "Actors: " + movieData.Actors + "\n" + "======================================================");
-      //     } else {
-      //       console.log(error);
-      //     }
-      //   });
-      // }
-      movieThis();
-
-}
-}
-});
+      }
+    }
+  });
 }
 
 
