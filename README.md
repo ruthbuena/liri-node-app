@@ -7,7 +7,7 @@ In this assignment, we were asked to create LIRI, a Language Interpretation and 
 Requirements:
 * Include package.json (this is initialized by running npm init).
 * Include .gitignore file.
-* Export twitter keys in keys.js file using consumer key/secret and access token key/secret (see Twitter API documentation).
+* Export twitter keys in keys.js file using consumer key/secret and access token key/secret (see Twitter API and Spotify API package documentation).
 * The following commands which should be included in the liri.js file should be available to be called in the CLI:
     * my-tweets (shows last 20 tweets)
     * spotify-this-song (shows Artist, Song Name, Preview link and Album)
